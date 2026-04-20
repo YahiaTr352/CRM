@@ -140,7 +140,7 @@
                     </p>
                 </div>
                 <div class="w-12 h-12 rounded-xl bg-amber-50 border border-amber-100/50 flex items-center justify-center text-amber-600 shadow-sm transition-transform duration-300 group-hover:scale-110">
-                    <i class="fas fa-sparkles text-xl"></i>
+                    <i class="fas fa-star text-xl"></i>
                 </div>
             </div>
         </div>
