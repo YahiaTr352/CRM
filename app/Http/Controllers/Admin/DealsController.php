@@ -103,9 +103,11 @@ class DealsController extends Controller
     {
         abort_if(Gate::denies('deal_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $stages = DealStage::pluck('name', 'id');
+
         $deal->load('contact_name', 'source', 'stage', 'products', 'created_by');
 
-        return view('admin.deals.show', compact('deal'));
+        return view('admin.deals.show', compact('deal', 'stages'));
     }
 
     public function destroy(Deal $deal)

@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ trans('panel.site_title') }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
@@ -23,73 +25,111 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/modern.css') }}" rel="stylesheet" />
     @yield('styles')
 </head>
 
-<body class="c-app">
+<body class="c-app bg-slate-50">
     @include('partials.menu')
     <div class="c-wrapper">
-        <header class="c-header c-header-fixed px-3">
-            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto" type="button" data-target="#sidebar" data-class="c-sidebar-show">
+        <header class="c-header c-header-fixed px-8 border-b border-slate-200 bg-white/80 backdrop-blur-md shadow-sm">
+            <button class="c-header-toggler c-class-toggler d-lg-none mfe-auto text-slate-500 hover:text-indigo-600 transition-colors" type="button" data-target="#sidebar" data-class="c-sidebar-show">
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
-            <a class="c-header-brand d-lg-none" href="#">{{ trans('panel.site_title') }}</a>
+            <a class="c-header-brand d-lg-none" href="#">
+                <span class="font-bold text-slate-900 tracking-tight">{{ trans('panel.site_title') }}</span>
+            </a>
 
-            <button class="c-header-toggler mfs-3 d-md-down-none" type="button" responsive="true">
+            <button class="c-header-toggler mfs-3 d-md-down-none text-slate-500 hover:text-indigo-600 transition-colors" type="button" responsive="true">
                 <i class="fas fa-fw fa-bars"></i>
             </button>
 
-            <ul class="c-header-nav ml-auto">
+            <ul class="c-header-nav ml-auto flex items-center gap-4">
                 @if(count(config('panel.available_languages', [])) > 1)
                     <li class="c-header-nav-item dropdown d-md-down-none">
-                        <a class="c-header-nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            {{ strtoupper(app()->getLocale()) }}
+                        <a class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span class="uppercase">{{ app()->getLocale() }}</span>
+                            <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-menu dropdown-menu-right rounded-xl border-slate-200 shadow-xl mt-2 animate-in fade-in slide-in-from-top-2 duration-200">
                             @foreach(config('panel.available_languages') as $langLocale => $langName)
-                                <a class="dropdown-item" href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }} ({{ $langName }})</a>
+                                <a class="dropdown-item flex items-center justify-between px-4 py-2 hover:bg-indigo-50 hover:text-indigo-700 transition-colors" href="{{ url()->current() }}?change_language={{ $langLocale }}">
+                                    <span class="font-medium">{{ $langName }}</span>
+                                    <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $langLocale }}</span>
+                                </a>
                             @endforeach
                         </div>
                     </li>
                 @endif
-
-
+                
+                <li class="c-header-nav-item">
+                    <div class="w-8 h-8 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500">
+                        <i class="fas fa-user text-xs"></i>
+                    </div>
+                </li>
             </ul>
         </header>
 
         <div class="c-body">
             <main class="c-main">
-
-
-                <div class="container-fluid">
+                <div class="container-fluid py-8">
                     @if(session('message'))
-                        <div class="row mb-2">
-                            <div class="col-lg-12">
-                                <div class="alert alert-success" role="alert">{{ session('message') }}</div>
+                        <div class="max-w-7xl mx-auto mb-6">
+                            <div class="flex items-center gap-3 p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-emerald-800 shadow-sm animate-in fade-in slide-in-from-top-4 duration-300">
+                                <i class="fas fa-check-circle text-emerald-500"></i>
+                                <p class="text-sm font-bold tracking-tight">{{ session('message') }}</p>
                             </div>
                         </div>
                     @endif
                     @if($errors->count() > 0)
-                        <div class="alert alert-danger">
-                            <ul class="list-unstyled">
-                                @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                        <div class="max-w-7xl mx-auto mb-6">
+                            <div class="p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-800 shadow-sm animate-in fade-in slide-in-from-top-4 duration-300">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <i class="fas fa-exclamation-circle text-rose-500"></i>
+                                    <p class="text-sm font-bold">Please correct the following errors:</p>
+                                </div>
+                                <ul class="list-disc list-inside space-y-1 ml-7">
+                                    @foreach($errors->all() as $error)
+                                        <li class="text-xs font-medium">{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
                     @endif
                     @yield('content')
-
                 </div>
-
-
             </main>
             <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
         </div>
     </div>
+    <style>
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; border: 2px solid transparent; background-clip: content-box; }
+        ::-webkit-scrollbar-thumb:hover { background: #cbd5e1; border: 2px solid transparent; background-clip: content-box; }
+
+        /* Smooth Transitions */
+        .transition-all { transition-duration: 200ms; }
+        
+        /* DataTables Customization */
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: #4f46e5 !important;
+            color: white !important;
+            border: none !important;
+            border-radius: 8px !important;
+            font-weight: 700 !important;
+        }
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background: #f1f5f9 !important;
+            border: none !important;
+            border-radius: 8px !important;
+            color: #475569 !important;
+        }
+    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
