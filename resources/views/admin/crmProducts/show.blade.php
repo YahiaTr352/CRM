@@ -51,7 +51,7 @@
             <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="aspect-square relative group bg-slate-50">
                     @if($crmProduct->product_image)
-                        <img src="{{ $crmProduct->product_image->getUrl() }}" class="w-full h-full object-cover" alt="{{ $crmProduct->product_name }}">
+                        <img src="{{ $crmProduct->getFirstMediaUrl('product_image') }}" class="w-full h-full object-cover" alt="{{ $crmProduct->product_name }}">
                     @else
                         <div class="w-full h-full flex flex-col items-center justify-center text-slate-300 gap-4">
                             <div class="w-20 h-20 rounded-2xl bg-slate-100 flex items-center justify-center">
@@ -90,54 +90,51 @@
                 </div>
             </div>
 
-            <!-- Quick Stats -->
+            <!-- Engagement Timeline Card -->
             <div class="bg-slate-900 rounded-2xl p-6 text-white shadow-xl shadow-slate-200">
-                <h3 class="text-xs font-black uppercase tracking-widest text-slate-400 mb-6 flex items-center gap-2">
-                    <i class="fas fa-history text-indigo-400"></i>
-                    Audit & Timeline
-                </h3>
                 <div class="space-y-4">
-                    <div class="flex items-center justify-between py-3 border-b border-slate-800">
-                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Registered</span>
-                        <span class="text-xs font-bold">{{ $crmProduct->created_at->format('M d, Y') }}</span>
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center text-white/60">
+                            <i class="fas fa-history text-lg"></i>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-black text-white/40 uppercase tracking-widest">Engagement Timeline</p>
+                            <p class="text-xs font-bold">Asset Registration</p>
+                        </div>
                     </div>
-                    <div class="flex items-center justify-between py-3">
-                        <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Last Update</span>
-                        <span class="text-xs font-bold text-indigo-400">{{ $crmProduct->updated_at->diffForHumans() }}</span>
+                    
+                    <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/10">
+                        <div>
+                            <p class="text-[9px] font-black text-white/40 uppercase tracking-widest mb-1">{{ trans('cruds.crmProduct.fields.created_at') }}</p>
+                            <p class="text-[11px] font-bold">{{ $crmProduct->created_at ? $crmProduct->created_at->format('M d, Y') : 'N/A' }}</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] font-black text-white/40 uppercase tracking-widest mb-1">{{ trans('cruds.crmProduct.fields.updated_at') }}</p>
+                            <p class="text-[11px] font-bold">{{ $crmProduct->updated_at ? $crmProduct->updated_at->format('M d, Y') : 'N/A' }}</p>
+                        </div>
                     </div>
+
+                    @can('crm_product_delete')
+                        <form action="{{ route('admin.crm-products.destroy', $crmProduct->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" class="pt-4">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <button type="submit" class="w-full py-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-500 text-xs font-bold hover:bg-rose-500 hover:text-white transition-all duration-300">
+                                <i class="fas fa-trash-alt mr-2"></i>
+                                Terminate Asset
+                            </button>
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>
 
         <!-- Main Content (2/3) -->
         <div class="lg:col-span-2 space-y-8">
-            <!-- Strategic Overview -->
-            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                <div class="p-6 border-b border-slate-100 bg-slate-50/30">
-                    <h2 class="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
-                        <i class="fas fa-align-left text-indigo-500"></i>
-                        Strategic Specifications
-                    </h2>
-                </div>
-                <div class="p-6 md:p-8">
-                    <div class="prose prose-slate max-w-none prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900 prose-p:font-medium">
-                        @if($crmProduct->description)
-                            {!! $crmProduct->description !!}
-                        @else
-                            <div class="flex flex-col items-center justify-center py-12 text-slate-400 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200">
-                                <i class="fas fa-file-alt text-3xl mb-3 opacity-20"></i>
-                                <p class="text-sm font-bold uppercase tracking-widest">No detailed description available</p>
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
             <!-- Asset Parameters -->
             <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
                 <div class="p-6 border-b border-slate-100 bg-slate-50/30">
                     <h2 class="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
-                        <i class="fas fa-sliders-h text-indigo-500"></i>
+                        <i class="fas fa-sliders-h text-indigo-600"></i>
                         Technical Parameters
                     </h2>
                 </div>
@@ -145,7 +142,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div class="group">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                <i class="fas fa-tag text-indigo-500 opacity-50"></i>
+                                <i class="fas fa-tag text-indigo-600"></i>
                                 Asset Name
                             </p>
                             <p class="text-lg font-black text-slate-900 tracking-tight">{{ $crmProduct->product_name }}</p>
@@ -153,7 +150,7 @@
                         
                         <div class="group">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                <i class="fas fa-barcode text-indigo-500 opacity-50"></i>
+                                <i class="fas fa-barcode text-indigo-600"></i>
                                 Product Code
                             </p>
                             <p class="text-lg font-black text-slate-900 tracking-tight uppercase">{{ $crmProduct->product_code ?? 'UNCODED' }}</p>
@@ -161,7 +158,7 @@
 
                         <div class="group">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                <i class="fas fa-layer-group text-indigo-500 opacity-50"></i>
+                                <i class="fas fa-layer-group text-indigo-600"></i>
                                 Category Assignment
                             </p>
                             <div class="flex items-center gap-2">
@@ -173,11 +170,62 @@
 
                         <div class="group">
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                                <i class="fas fa-dollar-sign text-indigo-500 opacity-50"></i>
+                                <i class="fas fa-dollar-sign text-indigo-600"></i>
                                 Market Valuation
                             </p>
                             <p class="text-lg font-black text-slate-900 tracking-tight">{{ number_format($crmProduct->unit_price, 2) }} <span class="text-xs font-bold text-slate-400 uppercase ml-1">USD</span></p>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Performance / Linked Deals -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-100 bg-slate-50/30">
+                    <h2 class="text-sm font-black text-slate-900 uppercase tracking-widest flex items-center gap-2">
+                        <i class="fas fa-chart-line text-indigo-500"></i>
+                        Market Performance
+                    </h2>
+                </div>
+                <div class="p-0">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50/50 border-b border-slate-100">
+                                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Linked Deal</th>
+                                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest">Pipeline Stage</th>
+                                    <th class="px-6 py-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Valuation</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                @forelse($crmProduct->deals as $deal)
+                                    <tr class="group hover:bg-slate-50/50 transition-colors">
+                                        <td class="px-6 py-4">
+                                            <a href="{{ route('admin.deals.show', $deal->id) }}" class="text-sm font-bold text-slate-700 group-hover:text-indigo-600 transition-colors">
+                                                {{ $deal->deal_name }}
+                                            </a>
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-600 uppercase tracking-wider border border-indigo-100/50">
+                                                {{ $deal->stage->name ?? 'Unassigned' }}
+                                            </span>
+                                        </td>
+                                        <td class="px-6 py-4 text-right">
+                                            <span class="text-sm font-black text-slate-900">${{ number_format($deal->amount, 2) }}</span>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="px-6 py-12 text-center">
+                                            <div class="flex flex-col items-center justify-center opacity-40">
+                                                <i class="fas fa-folder-open text-2xl mb-2"></i>
+                                                <p class="text-[10px] font-black uppercase tracking-widest">No Active Market Data</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

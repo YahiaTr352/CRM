@@ -163,7 +163,6 @@
                 <thead>
                     <tr class="bg-slate-50/80 border-b border-slate-200/60">
                         <th width="10" class="px-5 py-4"></th>
-                        <th class="px-5 py-4 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest whitespace-nowrap">Asset</th>
                         <th class="px-5 py-4 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest whitespace-nowrap">Identity & Code</th>
                         <th class="px-5 py-4 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest whitespace-nowrap">Classification</th>
                         <th class="px-5 py-4 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest whitespace-nowrap">Unit Valuation</th>
@@ -175,19 +174,6 @@
                     @forelse($crmProducts as $key => $crmProduct)
                         <tr data-entry-id="{{ $crmProduct->id }}" class="hover:bg-white hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:-translate-y-0.5 transition-all duration-300 group relative z-0 hover:z-10">
                             <td class="px-5 py-4.5"></td>
-                            <td class="px-5 py-4.5">
-                                <div class="relative w-14 h-14 rounded-xl overflow-hidden border border-slate-200 bg-slate-50 group-hover:border-indigo-200 transition-colors shadow-sm">
-                                    @if($crmProduct->product_image)
-                                        <a href="{{ $crmProduct->product_image->getUrl() }}" target="_blank" class="block w-full h-full">
-                                            <img src="{{ $crmProduct->product_image->getUrl('thumb') }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt="{{ $crmProduct->product_name }}">
-                                        </a>
-                                    @else
-                                        <div class="w-full h-full flex items-center justify-center text-slate-300">
-                                            <i class="fas fa-image text-lg"></i>
-                                        </div>
-                                    @endif
-                                </div>
-                            </td>
                             <td class="px-5 py-4.5">
                                 <div>
                                     <span class="text-sm font-bold text-slate-800 block leading-tight group-hover:text-indigo-600 transition-colors">{{ $crmProduct->product_name ?? '' }}</span>
@@ -242,7 +228,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="px-5 py-16 text-center">
+                            <td colspan="6" class="px-5 py-16 text-center">
                                 <div class="flex flex-col items-center justify-center">
                                     <div class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 mb-3">
                                         <i class="fas fa-box-open text-xl"></i>
@@ -312,10 +298,10 @@ $(function () {
       dom: 'rtip', 
       columnDefs: [
           { orderable: false, className: 'select-checkbox', targets: 0 },
-          { orderable: false, searchable: false, targets: [1, -1] }
+          { orderable: false, searchable: false, targets: [-1] }
       ],
       select: { style: 'multi+shift', selector: 'td:first-child' },
-      order: [[ 3, 'asc' ]],
+      order: [[ 2, 'asc' ]],
       language: {
           search: "",
           paginate: {

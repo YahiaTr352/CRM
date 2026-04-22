@@ -85,7 +85,7 @@ class CrmProductsController extends Controller
     {
         abort_if(Gate::denies('crm_product_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $crmProduct->load('product_category');
+        $crmProduct->load(['product_category', 'media', 'deals.stage']);
 
         return view('admin.crmProducts.show', compact('crmProduct'));
     }

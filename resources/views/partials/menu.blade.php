@@ -33,6 +33,22 @@
                     <span>{{ trans('cruds.deal.title') }}</span>
                 </a>
             </li>
+            @can('deal_stage_access')
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.deal-stages.index") }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 font-medium hover:text-white hover:bg-slate-800/50 transition-all group {{ request()->is("admin/deal-stages") || request()->is("admin/deal-stages/*") ? "bg-slate-800 text-white shadow-sm" : "" }}">
+                        <i class="fas fa-layer-group text-sm group-hover:scale-110 transition-transform {{ request()->is("admin/deal-stages") || request()->is("admin/deal-stages/*") ? "text-indigo-400" : "" }}"></i>
+                        <span>{{ trans('cruds.dealStage.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('deal_source_access')
+                <li class="c-sidebar-nav-item">
+                    <a href="{{ route("admin.deal-sources.index") }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 font-medium hover:text-white hover:bg-slate-800/50 transition-all group {{ request()->is("admin/deal-sources") || request()->is("admin/deal-sources/*") ? "bg-slate-800 text-white shadow-sm" : "" }}">
+                        <i class="fas fa-share-alt text-sm group-hover:scale-110 transition-transform {{ request()->is("admin/deal-sources") || request()->is("admin/deal-sources/*") ? "text-indigo-400" : "" }}"></i>
+                        <span>{{ trans('cruds.dealSource.title') }}</span>
+                    </a>
+                </li>
+            @endcan
         @endcan
 
         @can('crm_contact_access')
@@ -52,6 +68,14 @@
                 </a>
             </li>
         @endcan
+        @can('product_category_access')
+            <li class="c-sidebar-nav-item">
+                <a href="{{ route("admin.product-categories.index") }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 font-medium hover:text-white hover:bg-slate-800/50 transition-all group {{ request()->is("admin/product-categories") || request()->is("admin/product-categories/*") ? "bg-slate-800 text-white shadow-sm" : "" }}">
+                    <i class="fas fa-tags text-sm group-hover:scale-110 transition-transform {{ request()->is("admin/product-categories") || request()->is("admin/product-categories/*") ? "text-indigo-400" : "" }}"></i>
+                    <span>{{ trans('cruds.productCategory.title') }}</span>
+                </a>
+            </li>
+        @endcan
 
         @can('task_management_access')
             <li class="pt-4 pb-1 px-4">
@@ -65,6 +89,20 @@
                     </div>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items mt-1 space-y-1 pl-9">
+                    @can('task_status_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.task-statuses.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/task-statuses") || request()->is("admin/task-statuses/*") ? "text-indigo-400 font-bold" : "" }}">
+                                {{ trans('cruds.taskStatus.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('task_tag_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.task-tags.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/task-tags") || request()->is("admin/task-tags/*") ? "text-indigo-400 font-bold" : "" }}">
+                                {{ trans('cruds.taskTag.title') }}
+                            </a>
+                        </li>
+                    @endcan
                     @can('task_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.tasks.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/tasks") || request()->is("admin/tasks/*") ? "text-indigo-400 font-bold" : "" }}">
@@ -75,6 +113,7 @@
                     @can('tasks_calendar_access')
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.tasks-calendars.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/tasks-calendars") || request()->is("admin/tasks-calendars/*") ? "text-indigo-400 font-bold" : "" }}">
+                                <i class="fas fa-calendar-alt text-xs mr-2"></i>
                                 {{ trans('cruds.tasksCalendar.title') }}
                             </a>
                         </li>
@@ -109,10 +148,10 @@
                     </div>
                 </a>
                 <ul class="c-sidebar-nav-dropdown-items mt-1 space-y-1 pl-9">
-                    @can('user_access')
+                    @can('permission_access')
                         <li class="c-sidebar-nav-item">
-                            <a href="{{ route("admin.users.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/users") || request()->is("admin/users/*") ? "text-indigo-400 font-bold" : "" }}">
-                                {{ trans('cruds.user.title') }}
+                            <a href="{{ route("admin.permissions.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/permissions") || request()->is("admin/permissions/*") ? "text-indigo-400 font-bold" : "" }}">
+                                {{ trans('cruds.permission.title') }}
                             </a>
                         </li>
                     @endcan
@@ -120,6 +159,20 @@
                         <li class="c-sidebar-nav-item">
                             <a href="{{ route("admin.roles.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/roles") || request()->is("admin/roles/*") ? "text-indigo-400 font-bold" : "" }}">
                                 {{ trans('cruds.role.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('user_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.users.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/users") || request()->is("admin/users/*") ? "text-indigo-400 font-bold" : "" }}">
+                                {{ trans('cruds.user.title') }}
+                            </a>
+                        </li>
+                    @endcan
+                    @can('audit_log_access')
+                        <li class="c-sidebar-nav-item">
+                            <a href="{{ route("admin.audit-logs.index") }}" class="block px-4 py-2 rounded-lg text-sm text-slate-500 hover:text-white hover:bg-slate-800/50 transition-all {{ request()->is("admin/audit-logs") || request()->is("admin/audit-logs/*") ? "text-indigo-400 font-bold" : "" }}">
+                                {{ trans('cruds.auditLog.title') }}
                             </a>
                         </li>
                     @endcan

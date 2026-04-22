@@ -66,4 +66,9 @@ class CrmProduct extends Model implements HasMedia
     {
         return $this->belongsTo(ProductCategory::class, 'product_category_id');
     }
+
+    public function deals()
+    {
+        return $this->belongsToMany(Deal::class);
+    }
 }
