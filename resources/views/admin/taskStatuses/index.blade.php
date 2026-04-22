@@ -61,17 +61,6 @@
 
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse datatable-TaskStatus">
-                <thead>
-                    <tr class="bg-slate-50/50 border-b border-slate-200/60">
-                        <th width="10" class="px-8 py-5">
-                            <div class="flex items-center justify-center">
-                                <div class="w-4 h-4 rounded border-2 border-slate-200 flex items-center justify-center transition-all cursor-pointer hover:border-indigo-500"></div>
-                            </div>
-                        </th>
-                        <th class="px-8 py-5 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest whitespace-nowrap">Status Nomenclature</th>
-                        <th class="px-8 py-5 text-[10px] font-extrabold text-slate-500 uppercase tracking-widest whitespace-nowrap text-right">Management</th>
-                    </tr>
-                </thead>
                 <tbody class="divide-y divide-slate-100">
                     @foreach($taskStatuses as $key => $taskStatus)
                         <tr data-entry-id="{{ $taskStatus->id }}" class="hover:bg-slate-50/50 transition-all group">
