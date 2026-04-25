@@ -71,4 +71,16 @@ $(document).ready(function () {
     }, 400);
   });
 
+  // Sidebar dropdown toggle
+  $('.c-sidebar-nav-dropdown-toggle').click(function(e) {
+    e.preventDefault();
+    $(this).closest('.c-sidebar-nav-dropdown').toggleClass('c-show');
+  });
+
+  // Ensure active dropdowns are expanded on load
+  $('.c-sidebar-nav-dropdown').each(function() {
+    if ($(this).find('.text-indigo-400').length > 0) {
+      $(this).addClass('c-show');
+    }
+  });
 })

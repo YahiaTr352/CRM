@@ -18,7 +18,7 @@
             </div>
             
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-2xl bg-slate-900 flex items-center justify-center text-white shadow-xl shadow-slate-200">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white shadow-xl shadow-indigo-100">
                     <i class="fas fa-id-card text-xl"></i>
                 </div>
                 <div>
@@ -31,14 +31,8 @@
         </div>
 
         <div class="flex items-center gap-3">
-            @can('crm_contact_edit')
-                <a href="{{ route('admin.crm-contacts.edit', $crmContact->id) }}" class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 shadow-sm hover:border-indigo-200 hover:text-indigo-600 transition-all active:scale-95">
-                    <i class="fas fa-user-edit text-slate-400"></i>
-                    <span>Modify Profile</span>
-                </a>
-            @endcan
-            <a href="{{ route('admin.crm-contacts.index') }}" class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-slate-900 rounded-xl text-sm font-bold text-white shadow-lg shadow-slate-200 hover:bg-slate-800 transition-all active:scale-95">
-                <i class="fas fa-arrow-left opacity-50"></i>
+            <a href="{{ route('admin.crm-contacts.index') }}" class="inline-flex items-center gap-2.5 px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 shadow-sm hover:border-slate-300 hover:text-slate-900 transition-all active:scale-95">
+                <i class="fas fa-arrow-left text-slate-400"></i>
                 <span>Back to Directory</span>
             </a>
         </div>

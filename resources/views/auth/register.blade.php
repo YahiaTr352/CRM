@@ -29,13 +29,10 @@
 
     <div class="max-w-[480px] w-full">
         <!-- Logo / Brand Area -->
-        <div class="text-center mb-8">
-            <div class="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-indigo-600 text-white mb-4 shadow-lg shadow-indigo-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
+        <div class="flex flex-col items-center justify-center text-center mb-8">
+            <div class="scale-125 mb-6">
+                @include('partials.logo', ['textColor' => 'text-slate-900'])
             </div>
-            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">{{ trans('panel.site_title') }}</h1>
             <p class="text-slate-500 mt-2 font-medium">Create your account to get started.</p>
         </div>
 
